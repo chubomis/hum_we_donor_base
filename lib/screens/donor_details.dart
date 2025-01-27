@@ -26,7 +26,7 @@ class _DonorDetailsState extends State<DonorDetails> {
     try {
       final response = await Supabase.instance.client
           .from('donors')
-          .select('id, name, number, email, address')
+          .select('id, name, number, email, address, tag')
           .eq('id', widget.donorId)
           .maybeSingle();
 
@@ -93,6 +93,7 @@ class _DonorDetailsState extends State<DonorDetails> {
                   Text('Number: ${_donorDetails!['number']}', style: Theme.of(context).textTheme.bodyLarge),
                   Text('Email: ${_donorDetails!['email']}', style: Theme.of(context).textTheme.bodyLarge),
                   Text('Address: ${_donorDetails!['address']}', style: Theme.of(context).textTheme.bodyLarge),
+                  Text('Tag: ${_donorDetails!['tag']}', style: Theme.of(context).textTheme.bodyLarge),
                   const SizedBox(height: 20),
                   const Text('Donations:', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                   Expanded(

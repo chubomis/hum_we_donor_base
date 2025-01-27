@@ -20,6 +20,7 @@ class _CreateDonorState extends State<CreateDonor> {
   final TextEditingController _donationAmountController = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
   final TextEditingController _donationTypeController = TextEditingController();
+  final TextEditingController _tagController = TextEditingController();
   DateTime? _selectedDate;
 
   Future<void> _selectDate(BuildContext context) async {
@@ -48,6 +49,7 @@ class _CreateDonorState extends State<CreateDonor> {
         String amount = _donationAmountController.text;
         String date = _dateController.text;
         String type = _donationTypeController.text;
+        String tag = _tagController.text;
 
         // Insert donor details into the donors table
         final donorResponse = await Supabase.instance.client
@@ -57,6 +59,7 @@ class _CreateDonorState extends State<CreateDonor> {
               'number': phone,
               'address': address,
               'email': email,
+              'tag': tag
             })
             .select()
             .single();
@@ -80,6 +83,7 @@ class _CreateDonorState extends State<CreateDonor> {
           _donationAmountController.clear();
           _dateController.clear();
           _donationTypeController.clear();
+          _tagController.clear();
 
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Donor and donation added successfully')),
@@ -232,6 +236,22 @@ class _CreateDonorState extends State<CreateDonor> {
                   },
                 ),
               ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: TextFormField(
+                  controller: _tagController,
+                  decoration: const InputDecoration(
+                    labelText: "Tag this Donor",
+                    border: OutlineInputBorder(),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Please tag this donor";
+                    }
+                    return null;
+                  },
+                ),
+              ),
               const SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -269,6 +289,10 @@ class _CreateDonorState extends State<CreateDonor> {
                       value: "donationType",
                       child: Text("Donation Type"),
                     ),
+                    DropdownMenuItem(
+                      value: "tag",
+                      child: Text("Donor's Tag"),
+                    ),
                   ],
                   onChanged: (value) {
                     switch (value) {
@@ -292,6 +316,9 @@ class _CreateDonorState extends State<CreateDonor> {
                         break;
                       case "donationType":
                         _donationTypeController.text = "Not Applicable";
+                        break;
+                      case "tag":
+                        _tagController.text = "Not Applicable";
                         break;
                     }
                   },

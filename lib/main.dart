@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hum_we_donor_base/screens/home_screen.dart';
+import 'package:hum_we_donor_base/screens/welcome_screen.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:window_manager/window_manager.dart';
 
@@ -38,7 +39,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomeScreen(),
+      home: WelcomeScreen(),
     );
   }
 }

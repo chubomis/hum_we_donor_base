@@ -6,7 +6,9 @@ class Donors extends StatelessWidget {
   final String donorNumber;
   final String donorEmail;
   final String donorAddress;
+  final String donorTag;
   final VoidCallback onDelete;
+  final VoidCallback onEdit;
   final VoidCallback onTap;
 
   const Donors({
@@ -14,7 +16,9 @@ class Donors extends StatelessWidget {
     required this.donorNumber,
     required this.donorEmail,
     required this.donorAddress,
+    required this.donorTag,
     required this.onDelete,
+    required this.onEdit,
     required this.onTap,
     Key? key,
   }) : super(key: key);
@@ -28,7 +32,13 @@ class Donors extends StatelessWidget {
           motion: const StretchMotion(),
           children: [
             SlidableAction(
-              onPressed: (context) => onDelete(),
+              onPressed: (context) => onEdit(), // Handle the edit action here
+              backgroundColor: Colors.grey,
+              icon: Icons.settings,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            SlidableAction(
+              onPressed: (context) => onDelete(), // Handle the delete action here
               backgroundColor: Colors.red,
               icon: Icons.delete,
               borderRadius: BorderRadius.circular(12),
@@ -38,7 +48,7 @@ class Donors extends StatelessWidget {
         child: GestureDetector(
           onTap: onTap,
           child: Container(
-            height: 140,
+            height: 160,
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
               borderRadius: const BorderRadius.all(Radius.circular(15)),
@@ -54,6 +64,7 @@ class Donors extends StatelessWidget {
                   Text('Number: $donorNumber', style: Theme.of(context).textTheme.bodyLarge),
                   Text('Email: $donorEmail', style: Theme.of(context).textTheme.bodyLarge),
                   Text('Address: $donorAddress', style: Theme.of(context).textTheme.bodyLarge),
+                  Text('Tag: $donorTag', style: Theme.of(context).textTheme.bodyLarge),
                 ],
               ),
             ),
